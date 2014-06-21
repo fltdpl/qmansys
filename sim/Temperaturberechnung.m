@@ -2,11 +2,7 @@
 % 21.Juni.2014
 % Version 1
 %
-% Ein Boiler soll durch Wasserdurchlauf auf Temperatur gebracht
-% werden und soll die Temperatur halten. Dazu wird der folgende
-% Zweipunktregler benutzt. Die Temperatur wird dadurch erhoeht,
-% dass heißes Wasser durch den Boiler flieszt. Der Zulauf wird
-% durch eine Pumpe gesteuert.
+% Berechnung der Mischtemperatur.
 close all
 clear all
 clc
