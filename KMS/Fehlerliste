@@ -1,0 +1,16 @@
+Anzuzeigen
+
+- Temperatur des Kühlwassers
+- Temperatur des Boilerwassers
+- Pumpe ist in Betrieb, bzw. aus
+- Manueller Betrieb der Pumpe
+- Prüfen, ob vorheizen notwendig ist
+- Vorheizen beginnt
+
+
+Fehlercodes
+
+1. Boilerwasser über 100°C
+2. Vorheizen abgebrochen
+3. Manueller Pumpenstopp
+4. Vorheizen ist nicht notwendig
