@@ -398,6 +398,7 @@ rxCAN1(void) {
   
   CAN::RxMessageBuffer * message;
   if (isCAN1MsgReceived == false) { 
+    Seriel.println("Keine gültigen Frames empfangen");
     return;
     }
   isCAN1MsgReceived = false;		
