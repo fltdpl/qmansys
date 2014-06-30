@@ -1,0 +1,17 @@
+Fall 1: Motor Vorheizen
+Boilertemp: 70°C
+Kühlwasser: 20°C
+Vorheizen beginnen
+Kühlwassertemperatur erhöht sich.
+
+Fall 2: Boilerwasser aufwärmen
+Boilertemp: 20°C
+Kühlwasser: 90°C
+
+Fall 3: Aufwärmen nicht notwendig
+Boilertemp: 20°C
+Kühlwassertemp: 80°C
+
+Fall 4:
+Timeout zeigen
+
