@@ -56,6 +56,9 @@ float KH = 0.1;       // Kopplungsfaktor
 // Deklaration Relais
 int Relaisstatus = 0;  // Status des Relais bzw. Pumpe
 
+// Deklaration Fehler
+int Fehlercode = 0;    // Fehlercode gibt verschiedene Fehler an (0=kein Fehler, 1= ...)
+
 // Deklaration Vorheizen
 int T_KW_set = 40;
 
@@ -385,6 +388,7 @@ txCAN1(uint32_t rxnode) {
     message->data[0]      = T_KW;       // 1. Byte
     message->data[1]      = T_B;        // 2. Byte
     message->data[2]      = Relaisstatus;    // 3.Byte
+    message->data[3]      = Fehlercode       // 4.Byte
         
     canMod1.updateChannel(CAN::CHANNEL0);
     canMod1.flushTxChannel(CAN::CHANNEL0);
