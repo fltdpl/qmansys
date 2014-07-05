@@ -121,6 +121,7 @@ void loop() {
         Startphase_zeit = millis();
       } else {
         Serial.println ("Vorheizen ist nicht notwendig...");
+        Fehlercode = 4;
         delay(2000);
         Startphase = 0;
         Startphase_zeit = millis();
@@ -177,6 +178,7 @@ void loop() {
     }
     Startphase = 0;
     Serial.println ("Manueller Pumpenstopp");
+    Fehlercode = 3;
     digitalWrite(10, HIGH); // Relais ausschalten
     Relaisstatus = 0;
   }
@@ -210,6 +212,7 @@ void readbutton2() {
       Relaisstatus = 0;       // Status der Pumpe, bzw. des Relais setzen
       VorheizenTrue = 0;
       Serial.println ("Vorheizen abgebrochen...");
+      Fehlercode = 3;
       delay(2000);
     } else {
       if (man == 1) {
@@ -326,6 +329,7 @@ void anzeigen() {
   // Warnung bei Ueberhitzung des Boilerwassers anzeigen
   if (T_B > 100) {
     Serial.println ("!!! Boilerwasser ueber 100 C !!!");
+    Fehlercode = 1;
   }
   Serial.println(Relaisstatus);
   Serial.println();
@@ -384,14 +388,15 @@ txCAN1(uint32_t rxnode) {
 
     message->msgSID.SID   = rxnode;	// receiving node		
     message->msgEID.IDE   = 0;		// ID des Frames	
-    message->msgEID.DLC   = 3;          // Frame Größe
+    message->msgEID.DLC   = 4;          // Frame Größe
     message->data[0]      = T_KW;       // 1. Byte
     message->data[1]      = T_B;        // 2. Byte
     message->data[2]      = Relaisstatus;    // 3.Byte
-    message->data[3]      = Fehlercode       // 4.Byte
+    message->data[3]      = Fehlercode;      // 4.Byte
         
     canMod1.updateChannel(CAN::CHANNEL0);
     canMod1.flushTxChannel(CAN::CHANNEL0);
+    Fehlercode = 0;
   }	
 
 }
@@ -402,7 +407,7 @@ rxCAN1(void) {
   
   CAN::RxMessageBuffer * message;
   if (isCAN1MsgReceived == false) { 
-    Seriel.println("Keine gültigen Frames empfangen");
+    Serial.println("Keine gültigen Frames empfangen");
     return;
     }
   isCAN1MsgReceived = false;		
