@@ -4,5 +4,10 @@
     <string name="app_name">qmansis</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="kein_fehler">Kein Fehler.</string>
+    <string name="Button_Status">Status abrufen</string>
+    <string name="status_pumpe">Status Pumpe:</string>
+    <string name="motortemperatur">Motortemperatur:</string>
+    <string name="boilertemperatur">Boilertemperatur:</string>
 
 </resources>
