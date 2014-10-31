@@ -4,14 +4,28 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
+import android.view.View;
+import android.widget.Button;
+import android.telephony.SmsManager;
 
 public class Status extends ActionBarActivity {
+	
+	Button status;
+	
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status);
+        
+        status = (Button) findViewById(R.id.button_status);
+        status.setOnClickListener(new View.OnClickListener() {
+        	
+        	public void onClick(View v) {
+        		sendSMS();
+        	}
+        		
+        });
     }
 
 
@@ -32,5 +46,15 @@ public class Status extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    
+    
+    public void sendSMS() {
+    	String Telnummer    = "017663119724";
+    	String Telnachricht = "Piepender Spatz";
+    	
+    	SmsManager smsManager = SmsManager.getDefault();
+    	smsManager.sendTextMessage(Telnummer, null, Telnachricht, null, null);
+    	
     }
 }
