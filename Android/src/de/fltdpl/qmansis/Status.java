@@ -12,7 +12,6 @@ public class Status extends ActionBarActivity {
 	
 	Button status;
 	
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +42,7 @@ public class Status extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+        	
             return true;
         }
         return super.onOptionsItemSelected(item);
