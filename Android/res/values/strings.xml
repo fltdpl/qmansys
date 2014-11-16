@@ -9,5 +9,7 @@
     <string name="status_pumpe">Status Pumpe:</string>
     <string name="motortemperatur">Motortemperatur:</string>
     <string name="boilertemperatur">Boilertemperatur:</string>
+    <string name="about_text">Oh, for heaven’s sake, mankind, it’s only four light years away, you know. I’m sorry, but if you can’t be bothered to take an interest in local affairs, that’s your own lookout. Energize the demolition beams.</string>
+    <string name="about">Über</string>
 
 </resources>

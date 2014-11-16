@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class Menu extends ListActivity{
+public class Mymenu extends ListActivity{
 	
 	String classes[] = { "Status", "Seite2", "Settings"};
 	
@@ -15,7 +15,7 @@ public class Menu extends ListActivity{
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setListAdapter(new ArrayAdapter<String>(Menu.this, android.R.layout.simple_list_item_1, classes));
+		setListAdapter(new ArrayAdapter<String>(Mymenu.this, android.R.layout.simple_list_item_1, classes));
 	}
 			
 	@Override
@@ -25,7 +25,7 @@ public class Menu extends ListActivity{
 		String geklickt = classes[position];
 		try{
 			Class ourClass = Class.forName("de.fltdpl.qmansis." + geklickt);
-			Intent ourIntent = new Intent(Menu.this, ourClass);
+			Intent ourIntent = new Intent(Mymenu.this, ourClass);
 			startActivity(ourIntent);
 		}catch(ClassNotFoundException e){
 			e.printStackTrace();

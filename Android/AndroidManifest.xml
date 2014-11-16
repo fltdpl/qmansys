@@ -27,18 +27,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Menu"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="de.fltdpl.qmansis.MENU" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".Status"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="de.fltdpl.qmansis.STATUS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".About"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Dialog" >
+            <intent-filter>
+                <action android:name="de.fltdpl.qmansis.ABOUT" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Settings"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="de.fltdpl.qmansis.SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

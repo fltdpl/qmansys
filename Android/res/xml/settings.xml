@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+            android:title="Einstellung Telefonnummer">
+
+        <EditTextPreference
+                android:key="editnumber_preference"
+                android:title="Telefonnummer"
+                android:summary="Hier wird die Telefonnummer des Zielsystems angegeben."
+                android:dialogTitle="Telefonnummer eingeben!" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

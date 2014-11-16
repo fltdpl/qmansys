@@ -18,7 +18,7 @@ public class Splash extends Activity{
 				} catch (InterruptedException e){
 					e.printStackTrace();
 				}finally{
-					Intent openMainActivity = new Intent("de.fltdpl.qmansis.MENU");
+					Intent openMainActivity = new Intent("de.fltdpl.qmansis.STATUS");
 					startActivity(openMainActivity);
 				}
 			}
