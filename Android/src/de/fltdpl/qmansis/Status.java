@@ -23,6 +23,8 @@ public class Status extends ActionBarActivity {
 	private BroadcastReceiver mIntentReceiver;	
 	private ProgressBar progressBar;
 	Button status;
+	Button kmson;
+	Button kmsoff;
 	TextView displaystatus;
 	TextView displaytempmotor;
 	TextView displaytempboiler;
@@ -61,19 +63,33 @@ public class Status extends ActionBarActivity {
         setContentView(R.layout.activity_status);
         
         status = (Button) findViewById(R.id.button_status);
+        kmson  = (Button) findViewById(R.id.button_kmson);
+        kmson.setEnabled(false);										// gray out the kmson-button 
+        kmsoff = (Button) findViewById(R.id.button_kmsoff);
+        kmsoff.setEnabled(false);										// gray out the kmsoff-button
         progressBar = (ProgressBar) findViewById(R.id.progressBar1);
-        progressBar.setVisibility(4);
+        progressBar.setVisibility(4);									// lets make the progressbar invisible
+        
         status.setOnClickListener(new View.OnClickListener() {
-        	
         	public void onClick(View v) {
         		sendSMS_STATUS();
-        		progressBar.setVisibility(0);
-        		
-        		
-        		
-        	}
-        		
+        		progressBar.setVisibility(0);							// lets make the progressbar visible
+        	}	
         });
+        
+        kmson.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				sendSMS_KMSON();				
+			}
+		});
+        
+        kmsoff.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				sendSMS_KMSOFF();
+			}
+		});
     }
     
     @Override
@@ -110,7 +126,9 @@ public class Status extends ActionBarActivity {
 	               displaytempmotor.setText(intempmotor + "°C");
 	               displaytempboiler.setText(intempboiler + "°C");
 	               
-	               progressBar.setVisibility(8);
+	               progressBar.setVisibility(8);						// and the progressbar should be invisible again...
+	               kmson.setEnabled(true);								// lets make the kmson-button work
+	               kmsoff.setEnabled(true);								// lets make the kmsoff-button work
 	               
         	   }
         	   
@@ -130,18 +148,42 @@ public class Status extends ActionBarActivity {
     	
     	SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
     	String Telnummer    = getPrefs.getString("editnumber_preference", "0");
-    	//String Telnummer    = "017663119724";
     	String Telnachricht = "STATUS";
     	
     	SmsManager smsManager = SmsManager.getDefault();
     	smsManager.sendTextMessage(Telnummer, null, Telnachricht, null, null);
     	
     	// Debugging
-    	Log.e("sendSMS_STATUS", Telnummer + " / " + Telnachricht);
-    	
+    	Log.e("sendSMS_STATUS", Telnummer + " / " + Telnachricht);    	
     	
     }
     
+    public void sendSMS_KMSON() {
+    	
+    	SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+    	String Telnummer    = getPrefs.getString("editnumber_preference", "0");
+    	String Telnachricht = "KMSON";
+    	
+    	SmsManager smsManager = SmsManager.getDefault();
+    	smsManager.sendTextMessage(Telnummer, null, Telnachricht, null, null);
+    	
+    	// Debugging
+    	Log.e("sendSMS_KMSON", Telnummer + " / " + Telnachricht);    	
+    	
+    }
     
+    public void sendSMS_KMSOFF() {
+    	
+    	SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+    	String Telnummer    = getPrefs.getString("editnumber_preference", "0");
+    	String Telnachricht = "KMSOFF";
+    	
+    	SmsManager smsManager = SmsManager.getDefault();
+    	smsManager.sendTextMessage(Telnummer, null, Telnachricht, null, null);
+    	
+    	// Debugging
+    	Log.e("sendSMS_KMSOFF", Telnummer + " / " + Telnachricht);    	
+    	
+    }   
     
 }
