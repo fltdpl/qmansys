@@ -104,16 +104,17 @@ public class Status extends ActionBarActivity {
         		   String msg = intent.getStringExtra("get_msg");
         		   
         		   // Process the sms format and extract body and phoneNumber
-        		   msg = msg.replace("\n", "/");
+        		   msg = msg.replace("\n", "/");			// Replace Return mit /
+        		   msg = msg.replace(" ", "/");				// Replace Space mit /
         		   String body = msg.substring(msg.lastIndexOf(":") + 1, msg.length());
         		   String pNumber = msg.substring(0, msg.lastIndexOf(":"));
         		   // Debugging
         		   Log.e("onResume", "" + msg + body + pNumber);
         		   
 	               String bodytemp     = body.substring(0, body.lastIndexOf("/"));
-	               String instatus     = bodytemp.substring(0, bodytemp.lastIndexOf("/"));
-	               String intempmotor  = bodytemp.substring(bodytemp.lastIndexOf("/") + 1, bodytemp.length());
-	               String intempboiler = body.substring(body.lastIndexOf("/") +1, body.length());
+	               String instatus     = body.substring(body.lastIndexOf("/") +1, body.length());
+	               String intempmotor  = bodytemp.substring(0, bodytemp.lastIndexOf("/"));
+	               String intempboiler = bodytemp.substring(bodytemp.lastIndexOf("/") + 1, bodytemp.length());
 	               
 	               displaystatus     = (TextView) findViewById(R.id.text_status_pumpe_2);
 	               displaytempmotor  = (TextView) findViewById(R.id.text_motortemperatur_2);
