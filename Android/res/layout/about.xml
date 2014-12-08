@@ -3,10 +3,17 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-    <TextView android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:text="@string/about_text"
-    	android:id="@+id/textView_about" >
+
+    <TextView
+        android:id="@+id/textView_about"
+        android:layout_width="248dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="@string/about_text" >
+
     </TextView>
     
 </LinearLayout>

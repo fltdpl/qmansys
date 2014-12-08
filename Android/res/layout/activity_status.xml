@@ -9,16 +9,22 @@
     tools:context="de.fltdpl.qmansis.Status" >
 
     <View
-        android:id="@+id/myRectangleView"
+        android:id="@+id/Rectangle_green"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="@drawable/rectangle_green" />
+    
+    <View
+        android:id="@+id/Rectangle_red"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/rectangle_red" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/text_fehler"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/myRectangleView"
+        android:layout_alignBottom="@+id/Rectangle_green"
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="35dp"
         android:layout_marginLeft="42dp"
@@ -90,7 +96,7 @@
         android:id="@+id/button_status"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/myRectangleView"
+        android:layout_below="@+id/Rectangle_green"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="22dp"
         android:text="@string/button_status" />

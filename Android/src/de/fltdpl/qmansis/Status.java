@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
@@ -28,7 +29,10 @@ public class Status extends ActionBarActivity {
 	TextView displaystatus;
 	TextView displaytempmotor;
 	TextView displaytempboiler;
-	
+	TextView displayfehler;
+	View rectangle_green;
+	View rectangle_red;
+	int smsreceived;					// Kontrollflag zum Empfang einer angeforderten SMS
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -62,6 +66,10 @@ public class Status extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status);
         
+        rectangle_green = (View) findViewById(R.id.Rectangle_green);
+        rectangle_green.setVisibility(0);								// alles im gruenen Bereich
+        rectangle_red = (View) findViewById(R.id.Rectangle_red);
+        rectangle_red.setVisibility(4);									// nix im roten Bereich
         status = (Button) findViewById(R.id.button_status);
         kmson  = (Button) findViewById(R.id.button_kmson);
         kmson.setEnabled(false);										// gray out the kmson-button 
@@ -74,6 +82,13 @@ public class Status extends ActionBarActivity {
         	public void onClick(View v) {
         		sendSMS_STATUS();
         		progressBar.setVisibility(0);							// lets make the progressbar visible
+        		
+        		//30000 is the starting number (in milliseconds)
+        		//1000 is the number to count down each time (in milliseconds)
+        		Timeout counter = new Timeout(20000,1000);
+        		counter.start();
+        		
+        		smsreceived = 0;										// Kontrollflag geloescht
         	}	
         });
         
@@ -131,6 +146,9 @@ public class Status extends ActionBarActivity {
 	               kmson.setEnabled(true);								// lets make the kmson-button work
 	               kmsoff.setEnabled(true);								// lets make the kmsoff-button work
 	               
+	               smsreceived = 1;										// Kontrollflag setzten: Nachricht empfangen
+	               rectangle_green.setVisibility(0);					// alles im gruenen Bereich
+	               rectangle_red.setVisibility(4);
         	   }
         	   
            };
@@ -185,6 +203,51 @@ public class Status extends ActionBarActivity {
     	// Debugging
     	Log.e("sendSMS_KMSOFF", Telnummer + " / " + Telnachricht);    	
     	
-    }   
+    }
+    
+  //countdowntimer is an abstract class, so extend it and fill in methods
+    public class Timeout extends CountDownTimer{
+    	public Timeout(long millisInFuture, long countDownInterval) {
+    		super(millisInFuture, countDownInterval);
+    }
+
+    @Override
+    public void onFinish() {												// Timer ist abgelaufen
+    	 progressBar.setVisibility(8);										// and the progressbar should be invisible again...
+    	 displayfehler = (TextView) findViewById(R.id.text_fehler);
+    	 if (smsreceived == 1){
+    		 displayfehler.setText("Kein Fehler!");
+    	    rectangle_green.setVisibility(0);								// alles ok, darum gruen
+    	    rectangle_red.setVisibility(4);
+    	 } else {
+    		 displayfehler.setText("Keine Antwort erhalten!");
+    	     rectangle_green.setVisibility(4);
+    	     rectangle_red.setVisibility(0);								// Fehler wird mit rot quitiert
+    	 }
+    	
+    }
+    
+    @Override
+    public void onTick(long millisUntilFinished) {							// Waehrend der Timer laeuft...
+    	displayfehler = (TextView) findViewById(R.id.text_fehler);
+    	if (millisUntilFinished <= 10000) {
+    		displayfehler.setText("Anfrage dauert an...");
+    		rectangle_green.setVisibility(0);								// alles im gruenen Bereich
+            rectangle_red.setVisibility(4);
+    	} else {
+    		displayfehler.setText("...");
+    		rectangle_green.setVisibility(0);								// alles im gruenen Bereich
+            rectangle_red.setVisibility(4);
+    	}
+    	
+    	if (smsreceived == 1){
+    		onFinish();
+    		displayfehler.setText("Kein Fehler!");
+    		}  
+    		
+
+    }
+    
+    }
     
 }
