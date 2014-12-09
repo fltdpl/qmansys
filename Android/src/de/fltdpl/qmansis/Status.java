@@ -85,7 +85,7 @@ public class Status extends ActionBarActivity {
         		
         		//30000 is the starting number (in milliseconds)
         		//1000 is the number to count down each time (in milliseconds)
-        		Timeout counter = new Timeout(20000,1000);
+        		Timeout counter = new Timeout(40000,1000);
         		counter.start();
         		
         		smsreceived = 0;										// Kontrollflag geloescht
@@ -147,6 +147,7 @@ public class Status extends ActionBarActivity {
 	               kmsoff.setEnabled(true);								// lets make the kmsoff-button work
 	               
 	               smsreceived = 1;										// Kontrollflag setzten: Nachricht empfangen
+	               displayfehler.setText("Kein Fehler.");
 	               rectangle_green.setVisibility(0);					// alles im gruenen Bereich
 	               rectangle_red.setVisibility(4);
         	   }
@@ -216,11 +217,11 @@ public class Status extends ActionBarActivity {
     	 progressBar.setVisibility(8);										// and the progressbar should be invisible again...
     	 displayfehler = (TextView) findViewById(R.id.text_fehler);
     	 if (smsreceived == 1){
-    		 displayfehler.setText("Kein Fehler!");
+    		 displayfehler.setText("Kein Fehler.");
     	    rectangle_green.setVisibility(0);								// alles ok, darum gruen
     	    rectangle_red.setVisibility(4);
     	 } else {
-    		 displayfehler.setText("Keine Antwort erhalten!");
+    		 displayfehler.setText("Keine Antwort erhalten.");
     	     rectangle_green.setVisibility(4);
     	     rectangle_red.setVisibility(0);								// Fehler wird mit rot quitiert
     	 }
@@ -230,7 +231,7 @@ public class Status extends ActionBarActivity {
     @Override
     public void onTick(long millisUntilFinished) {							// Waehrend der Timer laeuft...
     	displayfehler = (TextView) findViewById(R.id.text_fehler);
-    	if (millisUntilFinished <= 10000) {
+    	if (millisUntilFinished <= 20000) {
     		displayfehler.setText("Anfrage dauert an...");
     		rectangle_green.setVisibility(0);								// alles im gruenen Bereich
             rectangle_red.setVisibility(4);
@@ -242,7 +243,7 @@ public class Status extends ActionBarActivity {
     	
     	if (smsreceived == 1){
     		onFinish();
-    		displayfehler.setText("Kein Fehler!");
+    		displayfehler.setText("Kein Fehler.");
     		}  
     		
 
