@@ -13,5 +13,8 @@
     <string name="about">Über</string>
     <string name="button_kmson">Qmansys einschalten</string>
     <string name="button_kmsoff">Qmansys ausschalten</string>
+    <string name="bluetooth_noconnect">Keine Verbindung</string>
+    <string name="bluetooth">Bluetooth</string>
+    <string name="status">Status</string>
 
 </resources>

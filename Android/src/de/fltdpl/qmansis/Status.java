@@ -38,14 +38,19 @@ public class Status extends ActionBarActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
 		switch(item.getItemId()){
+		case R.id.bluetooth:
+			Intent m2 = new Intent("de.fltdpl.qmansis.BLUETOOTH");
+			startActivity(m2);
+			
+			break;
 		case R.id.about:
-			Intent i = new Intent("de.fltdpl.qmansis.ABOUT");
-			startActivity(i);
+			Intent m3 = new Intent("de.fltdpl.qmansis.ABOUT");
+			startActivity(m3);
 			
 			break;
 		case R.id.action_settings:
-			Intent s = new Intent("de.fltdpl.qmansis.SETTINGS");
-			startActivity(s);
+			Intent m4 = new Intent("de.fltdpl.qmansis.SETTINGS");
+			startActivity(m4);
 			
 			break;
 		}
