@@ -2,13 +2,19 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-            android:title="Einstellung Telefonnummer">
+            android:title="Einstellungen">
 
         <EditTextPreference
                 android:key="editnumber_preference"
                 android:title="Telefonnummer"
                 android:summary="Hier wird die Telefonnummer des Zielsystems angegeben."
                 android:dialogTitle="Telefonnummer eingeben!" />
+        
+        <EditTextPreference
+                android:key="btdevice_preference"
+                android:title="Bluetooth Gerätename"
+                android:summary="Hier wird der Name des Bluetoothmoduls des Zielsystems angegeben."
+                android:dialogTitle="Gerätename des Bluetoothmoduls eingeben!" />
 
     </PreferenceCategory>
 

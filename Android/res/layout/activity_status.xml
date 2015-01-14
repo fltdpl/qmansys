@@ -32,66 +32,6 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@android:color/white" />
 
-    <TextView
-        android:id="@+id/text_motortemperatur_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button_kmsoff"
-        android:layout_below="@+id/text_status_pumpe_1"
-        android:text="@string/motortemperatur"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/text_boilertemperatur_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button_kmsoff"
-        android:layout_below="@+id/text_motortemperatur_1"
-        android:text="@string/boilertemperatur"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/text_status_pumpe_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/text_status_pumpe_1"
-        android:layout_alignBottom="@+id/text_status_pumpe_1"
-        android:layout_alignRight="@+id/button_kmsoff"
-        android:text="-"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        tools:ignore="HardcodedText" />
-
-    <TextView
-        android:id="@+id/text_boilertemperatur_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/text_boilertemperatur_1"
-        android:layout_alignBottom="@+id/text_boilertemperatur_1"
-        android:layout_alignRight="@+id/text_status_pumpe_2"
-        android:text="0 °C"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        tools:ignore="HardcodedText" />
-
-    <TextView
-        android:id="@+id/text_motortemperatur_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/text_status_pumpe_2"
-        android:layout_below="@+id/text_status_pumpe_2"
-        android:text="0 °C"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        tools:ignore="HardcodedText" />
-
-    <TextView
-        android:id="@+id/text_status_pumpe_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/text_motortemperatur_1"
-        android:layout_below="@+id/button_kmsoff"
-        android:layout_marginTop="30dp"
-        android:text="@string/status_pumpe"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
     <Button
         android:id="@+id/button_status"
         android:layout_width="250dp"
@@ -124,7 +64,67 @@
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/text_status_pumpe_1" />
+    
+    <TextView
+        android:id="@+id/text_status_pumpe_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/text_motortemperatur_1"
+        android:layout_above="@+id/text_motortemperatur_1"
+        android:text="@string/status_pumpe"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+    <TextView
+        android:id="@+id/text_status_pumpe_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/text_status_pumpe_1"
+        android:layout_alignBottom="@+id/text_status_pumpe_1"
+        android:layout_alignRight="@+id/button_kmsoff"
+        android:layout_above="@+id/text_motortemperatur_1"
+        android:text="-"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/text_motortemperatur_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/text_boilertemperatur_1"
+        android:layout_alignLeft="@+id/button_kmsoff"
+        android:text="@string/motortemperatur"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/text_motortemperatur_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/text_motortemperatur_1"
+        android:layout_alignBottom="@+id/text_motortemperatur_1"
+        android:layout_alignRight="@+id/text_status_pumpe_2"
+        android:text="0 °C"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        tools:ignore="HardcodedText" />
+    
+    <TextView
+        android:id="@+id/text_boilertemperatur_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignLeft="@+id/text_motortemperatur_1"
+        android:text="@string/boilertemperatur"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/text_boilertemperatur_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/text_motortemperatur_2"
+        android:text="0 °C"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        tools:ignore="HardcodedText" />
 
 </RelativeLayout>

@@ -1,3 +1,7 @@
+# Copyright
+chipKITCan.h
+chipKITCAN.cpp
+
 # built application files
 *.apk
 *.ap_

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
-    android:paddingTop="0dp" 
+    android:paddingTop="0dp"
     tools:context="de.fltdpl.qmansis.Bluetooth" >
 
     <View
@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="@drawable/rectangle_green" />
-    
+
     <TextView
         android:id="@+id/text_bluetoothstatus"
         android:layout_width="wrap_content"
@@ -26,7 +26,93 @@
         android:text="@string/bluetooth_noconnect"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@android:color/white" />
+
     
+
+    <Button
+        android:id="@+id/button_kmson"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Rectangle_green"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="22dp"
+        android:text="@string/button_kmson" />
+
+    <Button
+        android:id="@+id/button_kmsoff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button_kmson"
+        android:layout_alignRight="@+id/button_kmson"
+        android:layout_below="@+id/button_kmson"
+        android:text="@string/button_kmsoff" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/text_status_pumpe_1" />
+
+    <TextView
+        android:id="@+id/text_status_pumpe_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/text_motortemperatur_1"
+        android:layout_above="@+id/text_motortemperatur_1"
+        android:text="@string/status_pumpe"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
     
+    <TextView
+        android:id="@+id/text_status_pumpe_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/text_status_pumpe_1"
+        android:layout_alignBottom="@+id/text_status_pumpe_1"
+        android:layout_alignRight="@+id/button_kmsoff"
+        android:layout_above="@+id/text_motortemperatur_1"
+        android:text="-"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/text_motortemperatur_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/text_boilertemperatur_1"
+        android:layout_alignLeft="@+id/button_kmsoff"
+        android:text="@string/motortemperatur"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/text_motortemperatur_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/text_motortemperatur_1"
+        android:layout_alignBottom="@+id/text_motortemperatur_1"
+        android:layout_alignRight="@+id/text_status_pumpe_2"
+        android:text="0 °C"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        tools:ignore="HardcodedText" />
+    
+    <TextView
+        android:id="@+id/text_boilertemperatur_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/text_motortemperatur_1"
+        android:text="@string/boilertemperatur"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/text_boilertemperatur_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/text_motortemperatur_2"
+        android:text="0 °C"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        tools:ignore="HardcodedText" />
 
 </RelativeLayout>

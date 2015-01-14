@@ -140,12 +140,12 @@ public class Status extends ActionBarActivity {
 	               displaytempmotor  = (TextView) findViewById(R.id.text_motortemperatur_2);
 	               displaytempboiler = (TextView) findViewById(R.id.text_boilertemperatur_2);
 	               if (instatus.equals("ON")) {
-	            	   displaystatus.setText("An");
+	            	   displaystatus.setText("AN");
 	               }else{
-	            	   displaystatus.setText("Aus");
+	            	   displaystatus.setText("AUS");
 	               };
-	               displaytempmotor.setText(intempmotor + "°C");
-	               displaytempboiler.setText(intempboiler + "°C");
+	               displaytempmotor.setText(intempmotor + " °C");
+	               displaytempboiler.setText(intempboiler + " °C");
 	               
 	               progressBar.setVisibility(8);						// and the progressbar should be invisible again...
 	               kmson.setEnabled(true);								// lets make the kmson-button work
