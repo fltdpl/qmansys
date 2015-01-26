@@ -25,7 +25,7 @@ public class Status extends ActionBarActivity {
 	private ProgressBar progressBar;
 	Button status;
 	Button kmson;
-	Button kmsoff;
+//	Button kmsoff;
 	TextView displaystatus;
 	TextView displaytempmotor;
 	TextView displaytempboiler;
@@ -78,8 +78,9 @@ public class Status extends ActionBarActivity {
         status = (Button) findViewById(R.id.button_status);
         kmson  = (Button) findViewById(R.id.button_kmson);
         kmson.setEnabled(false);										// gray out the kmson-button 
-        kmsoff = (Button) findViewById(R.id.button_kmsoff);
-        kmsoff.setEnabled(false);										// gray out the kmsoff-button
+//        kmsoff = (Button) findViewById(R.id.button_kmsoff);
+//        kmsoff.setEnabled(false);										// gray out the kmsoff-button
+//        kmsoff.setVisibility(4);
         progressBar = (ProgressBar) findViewById(R.id.progressBar1);
         progressBar.setVisibility(4);									// lets make the progressbar invisible
         
@@ -104,12 +105,12 @@ public class Status extends ActionBarActivity {
 			}
 		});
         
-        kmsoff.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				sendSMS_KMSOFF();
-			}
-		});
+//        //kmsoff.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				sendSMS_KMSOFF();
+//			}
+//		});
     }
     
     @Override
@@ -149,7 +150,7 @@ public class Status extends ActionBarActivity {
 	               
 	               progressBar.setVisibility(8);						// and the progressbar should be invisible again...
 	               kmson.setEnabled(true);								// lets make the kmson-button work
-	               kmsoff.setEnabled(true);								// lets make the kmsoff-button work
+//	               kmsoff.setEnabled(true);								// lets make the kmsoff-button work
 	               
 	               smsreceived = 1;										// Kontrollflag setzten: Nachricht empfangen
 	               displayfehler.setText("Kein Fehler.");
@@ -187,7 +188,7 @@ public class Status extends ActionBarActivity {
     	
     	SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
     	String Telnummer    = getPrefs.getString("editnumber_preference", "0");
-    	String Telnachricht = "KMSON";
+    	String Telnachricht = "MANU";
     	
     	SmsManager smsManager = SmsManager.getDefault();
     	smsManager.sendTextMessage(Telnummer, null, Telnachricht, null, null);
@@ -201,7 +202,7 @@ public class Status extends ActionBarActivity {
     	
     	SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
     	String Telnummer    = getPrefs.getString("editnumber_preference", "0");
-    	String Telnachricht = "KMSOFF";
+    	String Telnachricht = "MANU";
     	
     	SmsManager smsManager = SmsManager.getDefault();
     	smsManager.sendTextMessage(Telnummer, null, Telnachricht, null, null);

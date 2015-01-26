@@ -2,6 +2,9 @@
 <resources>
 
     <string name="app_name">Qmansys</string>
+    <string name="app_name_gsm">Qmansys (GSM)</string>
+    <string name="app_name_bt">Qmansys (Bluetooth)</string>
+    <string name="app_name_settings">Qmansys (Einstellungen)</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="kein_fehler">Kein Fehler.</string>
@@ -10,11 +13,15 @@
     <string name="motortemperatur">Motortemperatur:</string>
     <string name="boilertemperatur">Boilertemperatur:</string>
     <string name="about_text">Oh, for heaven’s sake, mankind, it’s only four light years away, you know. I’m sorry, but if you can’t be bothered to take an interest in local affairs, that’s your own lookout. Energize the demolition beams.</string>
+    <string name="about_text_2">Qmansys auf Github:\r\nhttps://github.com/fltdpl/qmansys</string>
     <string name="about">Über</string>
-    <string name="button_kmson">Qmansys einschalten</string>
-    <string name="button_kmsoff">Qmansys ausschalten</string>
     <string name="bluetooth_noconnect">Keine Verbindung</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="status">Status</string>
+    <string name="phase"> </string>
+    <string name="bt_button_manuell">Start/Stopp (Manuell)</string>
+    <string name="bt_button_automatik">Qmansys starten</string>
+    <string name="gsm_button_manuell">Start/Stopp (manuell)</string>
+    <string name="gsm_info">Vor dem Ein/Ausschalten den aktuellen Status abrufen!</string>
 
 </resources>

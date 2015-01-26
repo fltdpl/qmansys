@@ -38,8 +38,9 @@ public class Bluetooth extends ActionBarActivity{
 	
 	private ProgressBar progressBar;
 	TextView btstatus;
-	Button kmson;
-	Button kmsoff;
+	Button kmsauto;
+	Button kmsmanuell;
+	TextView displayphase;
 	TextView displaystatus;
 	TextView displaytempmotor;
 	TextView displaytempboiler;
@@ -50,6 +51,8 @@ public class Bluetooth extends ActionBarActivity{
 	Set<BluetoothDevice> devicesArray;
 	ArrayList<String> pairedDevices;
 	ArrayList<BluetoothDevice> devices;
+	BluetoothSocket mmSocket;
+    BluetoothDevice mmDevice;
 	IntentFilter filter;
 	BroadcastReceiver receiver;
 	String tag = "debugging";
@@ -57,6 +60,7 @@ public class Bluetooth extends ActionBarActivity{
 	protected static final int SUCCESS_CONNECT = 0;
 	protected static final int MESSAGE_READ = 1;
 	protected static final int MESSAGE_TOAST = 2;
+	protected static final int MESSAGE_WRITE = 3;
 	public static final String TOAST = "toast";
 	Handler mHandler = new Handler(){
         @Override
@@ -64,11 +68,10 @@ public class Bluetooth extends ActionBarActivity{
         	super.handleMessage(msg);
         	
         	init();
-            
-            switch(msg.what){
+        	switch(msg.what){
             case SUCCESS_CONNECT:
                 // DO something
-                ConnectedThread connectedThread = new ConnectedThread((BluetoothSocket)msg.obj);
+            	ConnectedThread connectedThread = new ConnectedThread((BluetoothSocket)msg.obj);
                 btstatus.setText("Verbunden mit CANtoBT.");
                 progressBar.setVisibility(4);									// lets make the progressbar invisible
                 connectedThread.start();
@@ -87,7 +90,29 @@ public class Bluetooth extends ActionBarActivity{
 	                if (btemp >= 200)
 	                	btemp = btemp - 256;
 	                Integer status = Integer.parseInt(string.substring(16, 18), 16);
-	                Log.i(tag, "Meta:  "+meta1+" "+meta2+" "+" "+meta3+" M:"+mtemp+" B:"+btemp+" S:"+status);
+	                Integer phase = Integer.parseInt(string.substring(18, 20), 16);
+	                Log.i(tag, "Meta:  "+meta1+" "+meta2+" "+" "+meta3+" M:"+mtemp+" B:"+btemp+" S:"+status+" P:"+phase);
+	                
+	                switch(phase){
+	                case 1:
+	                	displayphase.setText("Startphase");
+	                	break;
+	                case 2:
+	                	displayphase.setText("Vorwärmen des Kühlwassers");
+	                	break;
+	                case 3:
+	                	displayphase.setText("Warten...");
+	                	break;
+	                case 4:
+	                	displayphase.setText("Erwärmen des Boilerwassers");
+	                	break;
+	                case 5:
+	                	displayphase.setText("Manueller Betrieb");
+	                	break;
+	                case 6:
+	                	displayphase.setText("Manueller Betrieb");
+	                	break;	                
+	                }
 	                
 	                if (status.equals(0)){
 	                	displaystatus.setText("AUS");
@@ -101,6 +126,12 @@ public class Bluetooth extends ActionBarActivity{
                 }
             	
                 break;
+            case MESSAGE_WRITE:
+            	String s = (String)msg.obj;
+            	Log.i(tag, "senden: "+s);
+            	ConnectedThread connectedThread2 = new ConnectedThread(mmSocket);
+            	connectedThread2.write(s.getBytes());
+            	break;
             case MESSAGE_TOAST:
             	Toast.makeText(getApplicationContext(), msg.getData().getString(TOAST),
             	Toast.LENGTH_LONG).show();
@@ -108,6 +139,8 @@ public class Bluetooth extends ActionBarActivity{
             }
         }
     };
+    
+    
 	
 
 	
@@ -115,19 +148,22 @@ public class Bluetooth extends ActionBarActivity{
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId()){
 		case R.id.status:
+			try {
+                mmSocket.close();
+            } catch (IOException e) { }
 			Intent m1 = new Intent("de.fltdpl.qmansis.STATUS");
 			startActivity(m1);
-			
 			break;
 		case R.id.about:
 			Intent m3 = new Intent("de.fltdpl.qmansis.ABOUT");
-			startActivity(m3);
-			
+			startActivity(m3);			
 			break;
 		case R.id.action_settings:
+			try {
+                mmSocket.close();
+            } catch (IOException e) { }
 			Intent m4 = new Intent("de.fltdpl.qmansis.SETTINGS");
 			startActivity(m4);
-			
 			break;
 		}
 		return false;
@@ -135,7 +171,6 @@ public class Bluetooth extends ActionBarActivity{
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO Auto-generated method stub
 		super.onCreateOptionsMenu(menu);
 		MenuInflater blowUp = getMenuInflater();
 		blowUp.inflate(R.menu.bluetooth, menu);
@@ -205,25 +240,44 @@ public class Bluetooth extends ActionBarActivity{
 	        	progressBar.setVisibility(0);						// lets make the progressbar visible
 	        	if(!btAdapter.isEnabled()){							// Bluetooth ausgeschaltet?
 	        		btstatus.setText("Bluetooth einschalten...");
-	        		turnOnBT();
+	        		//turnOnBT();
+	        		Toast.makeText(getApplicationContext(), "Bitte Bluetooth einschalten.", Toast.LENGTH_LONG).show();
+		        	finish();
 	        	}
-	        	
-	        	
+
 	        	getPairedDevices();
 	        	startDiscovery();
 	        	
 	        }
 	        
+	        kmsauto.setOnClickListener(new View.OnClickListener() {
+	        	
+				@Override
+				public void onClick(View v) {
+					String s = "KMSAUTO";
+					mHandler.obtainMessage(MESSAGE_WRITE, s).sendToTarget();  					
+				}
+			});
+	        
+	        kmsmanuell.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					String s = "KMSMANU";
+					mHandler.obtainMessage(MESSAGE_WRITE, s).sendToTarget();
+				}
+			});
+	        
+	        
+	        
 	 }
 
 	private void startDiscovery() {
-		// TODO Auto-generated method stub
 		btAdapter.cancelDiscovery();
 		btAdapter.startDiscovery();
 	}
 
 	private void getPairedDevices() {
-		// TODO Auto-generated method stub
 		btstatus.setText("Suche Bluetoothgerät...");
 		devicesArray = btAdapter.getBondedDevices();
 		if(devicesArray.size()>0){
@@ -243,18 +297,17 @@ public class Bluetooth extends ActionBarActivity{
 	 }
 
 	private void turnOnBT() {
-		// TODO Auto-generated method stub
 		Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 		startActivityForResult(intent, 1);
 	}
 
 	private void init() {
-		// TODO Auto-generated method stub
 		rectangle_green = (View) findViewById(R.id.Rectangle_green);
         rectangle_green.setVisibility(0);								// alles im gruenen Bereich
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setVisibility(4);									// lets make the progressbar invisible
         btstatus 		  = (TextView) findViewById(R.id.text_bluetoothstatus);
+        displayphase	  = (TextView) findViewById(R.id.text_phase);
         displaystatus     = (TextView) findViewById(R.id.text_status_pumpe_2);
         displaytempmotor  = (TextView) findViewById(R.id.text_motortemperatur_2);
         displaytempboiler = (TextView) findViewById(R.id.text_boilertemperatur_2);
@@ -262,6 +315,8 @@ public class Bluetooth extends ActionBarActivity{
         pairedDevices = new ArrayList<String>();
         devices = new ArrayList<BluetoothDevice>();
         filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        kmsauto = (Button) findViewById(R.id.bt_button_automatik);
+        kmsmanuell = (Button) findViewById(R.id.bt_button_manuell);
         
 	}
 	
@@ -269,12 +324,13 @@ public class Bluetooth extends ActionBarActivity{
 	protected void onPause() {
 		super.onPause();
 		unregisterReceiver(receiver);
+		
 	}
 	
 	private class ConnectThread extends Thread {
         
-        private final BluetoothSocket mmSocket;
-        private final BluetoothDevice mmDevice;
+        //private final BluetoothSocket mmSocket;
+        //private final BluetoothDevice mmDevice;
       
         public ConnectThread(BluetoothDevice device) {
             // Use a temporary object that is later assigned to mmSocket,
@@ -320,7 +376,7 @@ public class Bluetooth extends ActionBarActivity{
             }
       
             // Do work to manage the connection (in a separate thread)
-        
+            Log.i(tag, ""+mmSocket);
             mHandler.obtainMessage(SUCCESS_CONNECT, mmSocket).sendToTarget();
             
         }
@@ -334,7 +390,7 @@ public class Bluetooth extends ActionBarActivity{
     }
 	
 	private class ConnectedThread extends Thread {
-        private final BluetoothSocket mmSocket;
+        //private final BluetoothSocket mmSocket;
         private final InputStream mmInStream;
         private final OutputStream mmOutStream;
       
@@ -366,7 +422,7 @@ public class Bluetooth extends ActionBarActivity{
         		try {
                 	Vector<String> stringVector = new Vector<String>();
                     int k = 1;
-                    while (k<9){
+                    while (k<10){
                     	buffer = new byte[18];
                     	// Read from the InputStream
                 		bytes = mmInStream.read(buffer);
@@ -386,17 +442,15 @@ public class Bluetooth extends ActionBarActivity{
                     	
                     }
                     Log.i(tag, "vec1: "+stringVector);
-                	int i = 1;
-                	while (!stringVector.firstElement().equals("43") && stringVector.size() > 9) {
+                	while (!stringVector.firstElement().equals("43") && stringVector.size() > 10) {
                 		stringVector.removeElementAt(0);
-                		//i++;
                 	}
                 	
                 	Log.i(tag, "vec2: "+stringVector);
-                	if (stringVector.size() > 9)
-                		stringVector.setSize(9);
+                	if (stringVector.size() > 10)
+                		stringVector.setSize(10);
                 	Log.i(tag, "vec3: "+stringVector);
-                	if (stringVector.size() == 9){
+                	if (stringVector.size() == 10){
                 		if (stringVector.elementAt(0).equals("43") & 
                     			stringVector.elementAt(1).equals("41") &
                     			stringVector.elementAt(2).equals("4e")) {
@@ -408,7 +462,8 @@ public class Bluetooth extends ActionBarActivity{
                     				stringVector.elementAt(5)+
                     				stringVector.elementAt(6)+
                     				stringVector.elementAt(7)+
-                    				stringVector.elementAt(8);
+                    				stringVector.elementAt(8)+
+                    				stringVector.elementAt(9);
                     		
                     		//Log.i(tag, "Message: "+message);
                     		// Send the obtained bytes to the UI Activity
@@ -423,10 +478,13 @@ public class Bluetooth extends ActionBarActivity{
                     break;
                     
                 }
+        		
+        		
         			
         	}
         	
         }
+        
       
         /* Call this from the main activity to send data to the remote device */
         public void write(byte[] bytes) {
@@ -447,7 +505,7 @@ public class Bluetooth extends ActionBarActivity{
 		// Send a failure message back to the Activity
 		Message msg = mHandler.obtainMessage(MESSAGE_TOAST);
 		Bundle bundle = new Bundle();
-		bundle.putString(TOAST, "Verbindung verloren.");
+		bundle.putString(TOAST, "Verbindung getrennt.");
 		msg.setData(bundle);
 		mHandler.sendMessage(msg);
 		finish();

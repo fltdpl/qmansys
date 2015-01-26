@@ -30,22 +30,22 @@
     
 
     <Button
-        android:id="@+id/button_kmson"
+        android:id="@+id/bt_button_automatik"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/Rectangle_green"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="22dp"
-        android:text="@string/button_kmson" />
+        android:text="@string/bt_button_automatik" />
 
     <Button
-        android:id="@+id/button_kmsoff"
+        android:id="@+id/bt_button_manuell"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button_kmson"
-        android:layout_alignRight="@+id/button_kmson"
-        android:layout_below="@+id/button_kmson"
-        android:text="@string/button_kmsoff" />
+        android:layout_alignLeft="@+id/bt_button_automatik"
+        android:layout_alignRight="@+id/bt_button_automatik"
+        android:layout_below="@+id/bt_button_automatik"
+        android:text="@string/bt_button_manuell" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -55,6 +55,17 @@
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/text_status_pumpe_1" />
 
+    <TextView
+        android:id="@+id/text_phase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/text_status_pumpe_1"
+        android:layout_alignLeft="@+id/text_status_pumpe_1"
+        android:layout_alignRight="@+id/text_status_pumpe_2"
+        android:text="@string/phase"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/DimGray" />
+    
     <TextView
         android:id="@+id/text_status_pumpe_1"
         android:layout_width="wrap_content"
@@ -70,7 +81,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/text_status_pumpe_1"
         android:layout_alignBottom="@+id/text_status_pumpe_1"
-        android:layout_alignRight="@+id/button_kmsoff"
+        android:layout_alignRight="@+id/bt_button_manuell"
         android:layout_above="@+id/text_motortemperatur_1"
         android:text="-"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -81,7 +92,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/text_boilertemperatur_1"
-        android:layout_alignLeft="@+id/button_kmsoff"
+        android:layout_alignLeft="@+id/bt_button_manuell"
         android:text="@string/motortemperatur"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -114,5 +125,6 @@
         android:text="0 °C"
         android:textAppearance="?android:attr/textAppearanceMedium"
         tools:ignore="HardcodedText" />
+
 
 </RelativeLayout>
