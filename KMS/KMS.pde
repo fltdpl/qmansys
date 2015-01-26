@@ -60,7 +60,7 @@ int nachricht_phase = 1;  // Nachricht, die per CAN gesendet wird
 int nachricht_info = 1;   // Nachricht, die per CAN gesendet wird
 
 // Deklaration Startphase
-int zustand = 1;       // 1=Startphase, 2= 
+int zustand = 1;       // 1=Startphase, 2=
 int Startphase = 1;
 int VorheizenFlag = 0; // 0 wenn Vorheizen nicht Sinnvoll, sonst 1
 int VorheizenTrue = 0; // 1, wenn Vorheizen aktiv ist
@@ -94,8 +94,10 @@ void setup() {
   attachInterrupt(1, readbutton2, FALLING); // Interrupt bei fallender Flanke
   pinMode(2, INPUT);
   pinMode(3, INPUT);
+  pinMode(11, OUTPUT);
   pinMode(10, OUTPUT);
   pinMode(9, OUTPUT);
+  pinMode(8, OUTPUT);
 }
 
 
@@ -106,12 +108,12 @@ void loop() {
   T_KW = gettemperature(analogRead(A0)); // Temperatur Kuehlwasser speichern
   T_B  = gettemperature(analogRead(A1)); // Temperatur Boilerwasser speichern
 
-  
- 
-   
-  
+
+
+
+
   switch (zustand) {
-    
+
     // Startphase inaktiv
     case 1:
       pumpeAUS();
@@ -121,20 +123,23 @@ void loop() {
         if (button_autostart == 1){
           button_autostart = 0;
           zustand = 3;      // Springen in die Wartephase
+          nachricht_info = 0;
         }
       }else{
         nachricht_info = 2; // Vorheizen ist sinnvoll.
         if (button_autostart == 1){
           button_autostart = 0;
           zustand = 2;      // Springen in die Vorheizphase
+          nachricht_info = 0;
         }
       }
       if (button_manuell == 1) {
         zustand = 5;        // Springen in manuellen Startbetrieb
+        nachricht_info = 0;
       }
 
       break;
-    
+
     // Startphase aktiv -> Vorheizen
     case 2:
       pumpeAN();
@@ -154,13 +159,13 @@ void loop() {
         delay(100);
       }
       pumpeAUS();
-      zustand = 3;        // Springen in die Wartephase      
+      zustand = 3;        // Springen in die Wartephase
       break;
-      
+
     // Wartephase
     case 3:
       if ((millis() - Startphase_zeit) > Startzeit_set && T_KW > T_KW_min ) {
-        zustand = 4;      // Springen in die Zweipunktreglerphase        
+        zustand = 4;      // Springen in die Zweipunktreglerphase
       }
       if (button_manuell == 1) {
         zustand = 5;      // Springen in den manuellen Startbetrieb
@@ -171,9 +176,9 @@ void loop() {
       if ((millis() - Startphase_zeit) > 60000 && T_KW < 30 ) {
         inireset();
       }
-     
+
       break;
-    
+
     // Zweipunktregler -> Boilerwasser heizen
     case 4:
       if (zweipunkt(T_B) == 1){
@@ -199,7 +204,7 @@ void loop() {
       }
 
       break;
-    
+
     // Manuell Start
     case 5:
       pumpeAN();
@@ -211,7 +216,7 @@ void loop() {
       }
 
       break;
-    
+
     // Manuell Stopp
     case 6:
       pumpeAUS();
@@ -224,10 +229,10 @@ void loop() {
 
       break;
   }
-  
+
   senden();
   delay(100);
-  
+
 }
 
 
@@ -288,7 +293,7 @@ float gettemperature(float sens) {
   int temperaturMittelwert; //Mittelwert als Integer definieren
   int zaehlerSoll = 50;     //Durchläufe Soll
   int zaehlerIst = 0 ;      //Durchläufe Ist
-  
+
   temperaturMittelwert = 0; //Gemittelten Wert auf 0 zurücksetzen
   for(zaehlerIst = 0; zaehlerIst < zaehlerSoll; zaehlerIst++)
    {
@@ -297,7 +302,7 @@ float gettemperature(float sens) {
      temperaturMittelwert = (temperaturMittelwert + temperatur) / 2; //Neuer Mittelwert
      delay(1); //wir warten 1ms
    }
-   
+
    return temperaturMittelwert;
 }
 
@@ -323,6 +328,8 @@ float voltageToTemperature(float rawVoltage) {
 void pumpeAUS(){
   digitalWrite(10, HIGH); // Relais 1 ausschalten
   digitalWrite(9, LOW);   // Relais 2 anschalten
+  digitalWrite(8, LOW);   // Relais 3 immer an
+  digitalWrite(11, HIGH);  // Relais 4 (LED) ausschalten
   Relaisstatus = 0; // Status der Pumpe, bzw. des Relais setzen
 }
 
@@ -330,8 +337,10 @@ void pumpeAUS(){
 * Pumpe an *
 *************/
 void pumpeAN(){
-  digitalWrite(10, LOW); // Relais 1 anschalten
-  digitalWrite(9, HIGH); // Relais 2 ausschalten
+  digitalWrite(10, LOW);  // Relais 1 anschalten
+  digitalWrite(9, HIGH);  // Relais 2 ausschalten
+  digitalWrite(8, LOW);   // Relais 3 immer an
+  digitalWrite(11, LOW);  // Relais 4 (LED) anschalten
   Relaisstatus = 1; // Status der Pumpe, bzw. des Relais setzen
 }
 
@@ -380,7 +389,7 @@ void senden() {
        Relaisstatus != Relaisstatus_temp ||
        (millis() - Heartbeat_time) >= Heartbeat )
        {
-      
+
       // Temperaturen Anzeigen
       Serial.print ("Temperatur des Kuehlwassers: ");
       Serial.print (T_KW);
@@ -388,7 +397,7 @@ void senden() {
       Serial.print ("Temperatur des Boilerwasser: ");
       Serial.print (T_B);
       Serial.println (" C");
-      
+
       // Info
       switch (nachricht_info) {
         case 1:
@@ -397,8 +406,11 @@ void senden() {
         case 2:
           Serial.println ("Vorheizen kann begonnen werden");
           break;
+        default:
+
+          break;
       }
-      
+
       // Phase
       switch (zustand) {
         case 1:
@@ -420,24 +432,24 @@ void senden() {
           Serial.println ("Manueller Betrieb -> Pumpe AUS");
           break;
       }
-    
+
       // Pumpenstatus, bzw. Relaisstatus
       if (Relaisstatus == 1) {
         Serial.println ("Pumpe AN");
       } else {
         Serial.println ("Pumpe AUS");
       }
-    
+
       // Warnung bei Ueberhitzung des Boilerwassers anzeigen
       if (T_B > 100) {
         Serial.println ("!!! Boilerwasser ueber 100 C !!!");
       }
-      
+
       Serial.println();
       Serial.println();
       rxCAN1(); // Empfang von Daten
       txCAN1(KMS_Message_TX1); // Versenden von Daten
-      
+
       // Werte zwischenspeichern
       T_KW_temp = T_KW;
       T_B_temp = T_B;
@@ -497,7 +509,7 @@ txCAN1(uint32_t rxnode) {
 
     message->msgSID.SID = rxnode;	// receiving node
     message->msgEID.IDE = 0;	// ID des Frames
-    message->msgEID.DLC = 4; // Frame Größe
+    message->msgEID.DLC = 4; // Frame Groesse
     message->data[0] = T_KW; // 1. Byte
     message->data[1] = T_B; // 2. Byte
     message->data[2] = Relaisstatus; // 3.Byte
