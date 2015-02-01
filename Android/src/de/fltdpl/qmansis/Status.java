@@ -24,8 +24,8 @@ public class Status extends ActionBarActivity {
 	private BroadcastReceiver mIntentReceiver;	
 	private ProgressBar progressBar;
 	Button status;
-	Button kmson;
-//	Button kmsoff;
+	Button kmsauto;
+	Button kmsmanu;
 	TextView displaystatus;
 	TextView displaytempmotor;
 	TextView displaytempboiler;
@@ -76,11 +76,10 @@ public class Status extends ActionBarActivity {
         rectangle_red = (View) findViewById(R.id.Rectangle_red);
         rectangle_red.setVisibility(4);									// nix im roten Bereich
         status = (Button) findViewById(R.id.button_status);
-        kmson  = (Button) findViewById(R.id.button_kmson);
-        kmson.setEnabled(false);										// gray out the kmson-button 
-//        kmsoff = (Button) findViewById(R.id.button_kmsoff);
-//        kmsoff.setEnabled(false);										// gray out the kmsoff-button
-//        kmsoff.setVisibility(4);
+        kmsauto  = (Button) findViewById(R.id.button_kmsauto);
+        kmsauto.setEnabled(false);										// gray out the kmsauto-button 
+        kmsmanu = (Button) findViewById(R.id.button_kmsmanu);
+        kmsmanu.setEnabled(false);										// gray out the kmsmanu-button
         progressBar = (ProgressBar) findViewById(R.id.progressBar1);
         progressBar.setVisibility(4);									// lets make the progressbar invisible
         
@@ -98,19 +97,19 @@ public class Status extends ActionBarActivity {
         	}	
         });
         
-        kmson.setOnClickListener(new View.OnClickListener() {
+        kmsauto.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				sendSMS_KMSON();				
+				sendSMS_KMSAUTO();				
 			}
 		});
         
-//        //kmsoff.setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				sendSMS_KMSOFF();
-//			}
-//		});
+        kmsmanu.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				sendSMS_KMSMANU();
+			}
+		});
     }
     
     @Override
@@ -140,7 +139,7 @@ public class Status extends ActionBarActivity {
 	               displaystatus     = (TextView) findViewById(R.id.text_status_pumpe_2);
 	               displaytempmotor  = (TextView) findViewById(R.id.text_motortemperatur_2);
 	               displaytempboiler = (TextView) findViewById(R.id.text_boilertemperatur_2);
-	               if (instatus.equals("ON")) {
+	               if (instatus.substring(0, 2).equals("ON")) {
 	            	   displaystatus.setText("AN");
 	               }else{
 	            	   displaystatus.setText("AUS");
@@ -149,8 +148,8 @@ public class Status extends ActionBarActivity {
 	               displaytempboiler.setText(intempboiler + " °C");
 	               
 	               progressBar.setVisibility(8);						// and the progressbar should be invisible again...
-	               kmson.setEnabled(true);								// lets make the kmson-button work
-//	               kmsoff.setEnabled(true);								// lets make the kmsoff-button work
+	               kmsauto.setEnabled(true);							// lets make the kmsauto-button work
+	               kmsmanu.setEnabled(true);							// lets make the kmsmanu-button work
 	               
 	               smsreceived = 1;										// Kontrollflag setzten: Nachricht empfangen
 	               displayfehler.setText("Kein Fehler.");
@@ -184,31 +183,31 @@ public class Status extends ActionBarActivity {
     	
     }
     
-    public void sendSMS_KMSON() {
+    public void sendSMS_KMSAUTO() {
     	
     	SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
     	String Telnummer    = getPrefs.getString("editnumber_preference", "0");
-    	String Telnachricht = "MANU";
+    	String Telnachricht = "KMSAUTOXYZ";
     	
     	SmsManager smsManager = SmsManager.getDefault();
     	smsManager.sendTextMessage(Telnummer, null, Telnachricht, null, null);
     	
     	// Debugging
-    	Log.e("sendSMS_KMSON", Telnummer + " / " + Telnachricht);    	
+    	Log.e("sendSMS_KMSAUTO", Telnummer + " / " + Telnachricht);    	
     	
     }
     
-    public void sendSMS_KMSOFF() {
+    public void sendSMS_KMSMANU() {
     	
     	SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
     	String Telnummer    = getPrefs.getString("editnumber_preference", "0");
-    	String Telnachricht = "MANU";
+    	String Telnachricht = "KMSMANUXYZ";
     	
     	SmsManager smsManager = SmsManager.getDefault();
     	smsManager.sendTextMessage(Telnummer, null, Telnachricht, null, null);
     	
     	// Debugging
-    	Log.e("sendSMS_KMSOFF", Telnummer + " / " + Telnachricht);    	
+    	Log.e("sendSMS_KMSMANU", Telnummer + " / " + Telnachricht);    	
     	
     }
     

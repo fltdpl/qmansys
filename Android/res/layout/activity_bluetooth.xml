@@ -27,8 +27,6 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@android:color/white" />
 
-    
-
     <Button
         android:id="@+id/bt_button_automatik"
         android:layout_width="250dp"
@@ -46,6 +44,18 @@
         android:layout_alignRight="@+id/bt_button_automatik"
         android:layout_below="@+id/bt_button_automatik"
         android:text="@string/bt_button_manuell" />
+    
+    <TextView
+        android:id="@+id/text_info_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/bt_button_automatik"
+        android:layout_alignRight="@+id/bt_button_automatik"
+        android:layout_below="@+id/bt_button_manuell"
+        android:layout_marginTop="22dp"
+        android:text="@string/bt_info"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/DimGray" />
 
     <ProgressBar
         android:id="@+id/progressBar"

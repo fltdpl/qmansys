@@ -22,6 +22,8 @@
     <string name="bt_button_manuell">Start/Stopp (Manuell)</string>
     <string name="bt_button_automatik">Qmansys starten</string>
     <string name="gsm_button_manuell">Start/Stopp (manuell)</string>
+    <string name="gsm_button_automatik">Automatik starten</string>
     <string name="gsm_info">Vor dem Ein/Ausschalten den aktuellen Status abrufen!</string>
+    <string name="bt_info"> </string>
 
 </resources>

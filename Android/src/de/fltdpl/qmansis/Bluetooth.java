@@ -40,6 +40,7 @@ public class Bluetooth extends ActionBarActivity{
 	TextView btstatus;
 	Button kmsauto;
 	Button kmsmanuell;
+	TextView btinfo;
 	TextView displayphase;
 	TextView displaystatus;
 	TextView displaytempmotor;
@@ -92,27 +93,35 @@ public class Bluetooth extends ActionBarActivity{
 	                Integer status = Integer.parseInt(string.substring(16, 18), 16);
 	                Integer phase = Integer.parseInt(string.substring(18, 20), 16);
 	                Log.i(tag, "Meta:  "+meta1+" "+meta2+" "+" "+meta3+" M:"+mtemp+" B:"+btemp+" S:"+status+" P:"+phase);
+	                String txphase = null;
 	                
 	                switch(phase){
 	                case 1:
-	                	displayphase.setText("Startphase");
+	                	txphase = "Startphase";
 	                	break;
 	                case 2:
-	                	displayphase.setText("Vorwärmen des Kühlwassers");
+	                	txphase = "Vorwärmen des Kühlwassers";
 	                	break;
 	                case 3:
-	                	displayphase.setText("Warten...");
+	                	txphase = "Warten...";
 	                	break;
 	                case 4:
-	                	displayphase.setText("Erwärmen des Boilerwassers");
+	                	txphase = "Erwärmen des Boilerwassers";
 	                	break;
 	                case 5:
-	                	displayphase.setText("Manueller Betrieb");
+	                	txphase = "Manueller Betrieb";
 	                	break;
 	                case 6:
-	                	displayphase.setText("Manueller Betrieb");
+	                	txphase = "Manueller Betrieb";
 	                	break;	                
 	                }
+	                //displayphase.setText(txphase);
+	                if (txphase == null) {
+	                	btinfo.setText(" ");
+	                } else {
+	                	btinfo.setText("Aktuelle Phase des Systems:\r\n"+txphase);
+	                }
+	                
 	                
 	                if (status.equals(0)){
 	                	displaystatus.setText("AUS");
@@ -149,8 +158,8 @@ public class Bluetooth extends ActionBarActivity{
 		switch(item.getItemId()){
 		case R.id.status:
 			try {
-                mmSocket.close();
-            } catch (IOException e) { }
+				mmSocket.close();
+			} catch (IOException e) { }
 			Intent m1 = new Intent("de.fltdpl.qmansis.STATUS");
 			startActivity(m1);
 			break;
@@ -160,8 +169,8 @@ public class Bluetooth extends ActionBarActivity{
 			break;
 		case R.id.action_settings:
 			try {
-                mmSocket.close();
-            } catch (IOException e) { }
+				mmSocket.close();
+			} catch (IOException e) { }
 			Intent m4 = new Intent("de.fltdpl.qmansis.SETTINGS");
 			startActivity(m4);
 			break;
@@ -202,7 +211,7 @@ public class Bluetooth extends ActionBarActivity{
 	                    devices.add(device);
 	                    //String s = "CANtoBT1";
 	                    if(device.getName().equals(btdevicename)){
-	                    	btstatus.setText("CANtoBT gefunden...");
+	                    	btstatus.setText("Modul gefunden...");
 	                    	if(btAdapter.isDiscovering()){
 	                            btAdapter.cancelDiscovery();
 	                        }
@@ -254,7 +263,7 @@ public class Bluetooth extends ActionBarActivity{
 	        	
 				@Override
 				public void onClick(View v) {
-					String s = "KMSAUTO";
+					String s = "AUTO";
 					mHandler.obtainMessage(MESSAGE_WRITE, s).sendToTarget();  					
 				}
 			});
@@ -263,7 +272,7 @@ public class Bluetooth extends ActionBarActivity{
 				
 				@Override
 				public void onClick(View v) {
-					String s = "KMSMANU";
+					String s = "MANU";
 					mHandler.obtainMessage(MESSAGE_WRITE, s).sendToTarget();
 				}
 			});
@@ -306,11 +315,12 @@ public class Bluetooth extends ActionBarActivity{
         rectangle_green.setVisibility(0);								// alles im gruenen Bereich
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setVisibility(4);									// lets make the progressbar invisible
-        btstatus 		  = (TextView) findViewById(R.id.text_bluetoothstatus);
-        displayphase	  = (TextView) findViewById(R.id.text_phase);
-        displaystatus     = (TextView) findViewById(R.id.text_status_pumpe_2);
-        displaytempmotor  = (TextView) findViewById(R.id.text_motortemperatur_2);
-        displaytempboiler = (TextView) findViewById(R.id.text_boilertemperatur_2);
+        btstatus 		  	= (TextView) findViewById(R.id.text_bluetoothstatus);
+        btinfo				= (TextView) findViewById(R.id.text_info_bt);
+        displayphase	  	= (TextView) findViewById(R.id.text_phase);
+        displaystatus     	= (TextView) findViewById(R.id.text_status_pumpe_2);
+        displaytempmotor  	= (TextView) findViewById(R.id.text_motortemperatur_2);
+        displaytempboiler 	= (TextView) findViewById(R.id.text_boilertemperatur_2);
         btAdapter = BluetoothAdapter.getDefaultAdapter();				// Init Bluetoothadapter
         pairedDevices = new ArrayList<String>();
         devices = new ArrayList<BluetoothDevice>();
@@ -479,8 +489,6 @@ public class Bluetooth extends ActionBarActivity{
                     
                 }
         		
-        		
-        			
         	}
         	
         }

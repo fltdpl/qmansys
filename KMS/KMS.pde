@@ -173,7 +173,7 @@ void loop() {
       if (button_autostart == 1) {
         inireset();
       }
-      if ((millis() - Startphase_zeit) > 60000 && T_KW < 30 ) {
+      if ((millis() - Startphase_zeit) > 60000 && T_KW < 35 ) {
         inireset();
       }
 
@@ -370,7 +370,7 @@ int zweipunkt(int T_B_Pruef) {
 * Pruefen ob Vorheizen sinnvoll ist *
 *************************************/
  int pruefvorheizen(int T_B_Pruef, int T_KW_Pruef) {
-   if (T_KW_Pruef < 30 && T_B_Pruef > 40) {
+   if (T_KW_Pruef < 35 && T_B_Pruef > 40) {
      VorheizenFlag = 1;
    } else {
      VorheizenFlag = 0;

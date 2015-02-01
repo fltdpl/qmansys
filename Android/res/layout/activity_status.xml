@@ -42,22 +42,22 @@
         android:text="@string/button_status" />
 
     <Button
-        android:id="@+id/button_kmson"
+        android:id="@+id/button_kmsauto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/button_status"
         android:layout_alignRight="@+id/button_status"
         android:layout_below="@+id/button_status"
-        android:text="@string/gsm_button_manuell" />
+        android:text="@string/gsm_button_automatik" />
     
-<!--     <Button -->
-<!--         android:id="@+id/button_kmsoff" -->
-<!--         android:layout_width="wrap_content" -->
-<!--         android:layout_height="wrap_content" -->
-<!--         android:layout_alignLeft="@+id/button_kmson" -->
-<!--         android:layout_alignRight="@+id/button_kmson" -->
-<!--         android:layout_below="@+id/button_kmson" -->
-<!--         android:text="@string/button_kmsoff" /> -->
+    <Button
+        android:id="@+id/button_kmsmanu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button_kmsauto"
+        android:layout_alignRight="@+id/button_kmsauto"
+        android:layout_below="@+id/button_kmsauto"
+        android:text="@string/gsm_button_manuell" />
 
 	<TextView
         android:id="@+id/text_info_gsm"
@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/button_status"
         android:layout_alignRight="@+id/button_status"
-        android:layout_below="@+id/button_kmson"
+        android:layout_below="@+id/button_kmsmanu"
         android:layout_marginTop="22dp"
         android:text="@string/gsm_info"
         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -93,7 +93,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/text_status_pumpe_1"
         android:layout_alignBottom="@+id/text_status_pumpe_1"
-        android:layout_alignRight="@+id/button_kmson"
+        android:layout_alignRight="@+id/button_kmsauto"
         android:layout_above="@+id/text_motortemperatur_1"
         android:text="-"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -104,7 +104,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/text_boilertemperatur_1"
-        android:layout_alignLeft="@+id/button_kmson"
+        android:layout_alignLeft="@+id/button_kmsauto"
         android:text="@string/motortemperatur"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
